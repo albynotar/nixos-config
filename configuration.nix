@@ -64,7 +64,7 @@
 
   # Allow flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -92,7 +92,7 @@
   # enable programs and config their settings
   programs.firefox = {
     enable = true;
-    profiles.DisableTelemetry = true;
+    policies.DisableTelemetry = true;
   };
 
   programs.git = {
