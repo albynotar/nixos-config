@@ -62,6 +62,9 @@
     pulse.enable = true;
   };
 
+  # Allow flakes
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -118,14 +121,6 @@
     #  thunderbird
     ];
   };
-
- 
-
-  
-
-  
-
-
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
