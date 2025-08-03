@@ -1,5 +1,5 @@
 {
-  description = "Alby NixOs setup";
+  description = "My NixOs setup";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
@@ -16,5 +16,4 @@
       };
     };
   };
-
 }
