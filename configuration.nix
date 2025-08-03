@@ -92,7 +92,6 @@
   # enable programs and config their settings
   programs.fish = {
     enable = true;
-    
   };
 
   programs.firefox = {
