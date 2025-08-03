@@ -92,7 +92,7 @@
   # enable programs and config their settings
   programs.fish = {
     enable = true;
-    ShellInit = ''
+    shellInit = ''
       set fish_greeting # Disable greeting
     '';
   };
