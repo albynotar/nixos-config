@@ -106,18 +106,26 @@
         "cookiebanners.service.mode.privateBrowsing" = 2; # Block cookie banners in private browsing
         "cookiebanners.service.mode" = 2; # Block cookie banners
         "privacy.donottrackheader.enabled" = false;
-        "privacy.fingerprintingProtection" = true;
+        "privacy.fingerprintingProtection" = false;
         "privacy.resistFingerprinting" = false;
         "privacy.trackingprotection.emailtracking.enabled" = true;
         "privacy.trackingprotection.enabled" = true;
-        "privacy.trackingprotection.fingerprinting.enabled" = true;
+        "privacy.trackingprotection.fingerprinting.enabled" =false;
         "privacy.trackingprotection.socialtracking.enabled" = true;
+        "sidebar.verticalTabs.enabled" = true;
+        "sidebar.verticalTabs" = true;
+        "browser.theme.toolbar-theme" = 2;
       };
       ExtensionSettings = {
         "uBlock0@raymondhill.net" = {
           install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
           installation_mode = "force_installed";
         };
+        "myallychou@gmail.com" = {
+          install_url = "https://addons.mozilla.org/it/firefox/addon/youtube-recommended-videos/latest.xpi";
+          installation_mode = "force_installed";
+        };
+        
       };
     };
   };
