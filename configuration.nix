@@ -127,34 +127,58 @@
   fastfetch
   bitwarden-desktop
   nixfmt-rfc-style
-    (vscode-with-extensions.override {
+  rustup
+
+  # set up vscode with its extensions
+  (vscode-with-extensions.override {
     vscodeExtensions = with vscode-extensions; [
+      # already packaged in nix packages
       # languages
       jnoortheen.nix-ide
       ms-python.python
       ms-python.debugpy
-      ms-python.vscode-python-envs
       ms-python.vscode-pylance
       rust-lang.rust-analyzer
       golang.go
       reditorsupport.r
-
-reditorsupport.r-syntax
       #utils
-
       esbenp.prettier-vscode
       codezombiech.gitignore
-tyriar.sort-lines
-marclipovsky.string-manipulation
-
-
-tomoki1207.pdf
-charliermarsh.ruff
-
-
-
-janisdd.vscode-edit-csv
-
+      tyriar.sort-lines
+      tomoki1207.pdf
+      
+      # not packaged, manual retrival
+    ]++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+      {
+        name = "vscode-python-envs";
+        publisher = "ms-python";
+        version = "1.2.0";
+        sha256 = "6QjfJuxqu7sXqlcp3q3T+J9aGsOSu90xoQxdL+G6Fus=";
+      }
+      {
+        name = "r-syntax";
+        publisher = "reditorsupport";
+        version = "0.1.3";
+        sha256 = "grkfkmyERVUkB8kSH+NPd2Mv4WF/h/obw8ebmxPx5zU=";
+      }
+      {
+        name = "string-manipulation";
+        publisher = "marclipovsky";
+        version = "0.7.43";
+        sha256 = "i9DhQZ1sZiMQnEK9kUBbAeq1+CqAyZPk0jb48tGv7yg=";
+      }
+      {
+        name = "ruff";
+        publisher = "charliermarsh";
+        version = "2025.24.0";
+        sha256 = "ijy/ZVhVU1/ZrS1Fu3vuiThcjLuKSqf3lrgl8is54Co=";
+      }
+      {
+        name = "vscode-edit-csv";
+        publisher = "janisdd";
+        version = "0.11.5";
+        sha256 = "0DPp4F+cdLff80XGXYoDiXtoAKKs/wp44qv41qG36dU=";
+      }
     ];
     })
     ];
