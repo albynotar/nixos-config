@@ -75,7 +75,6 @@
   curl
   wget
   git
-  vscode
   bash
   fish
   ghostty
@@ -113,6 +112,7 @@
   programs.vscode = {
     enable = true;
     defaultEditor = true;
+    
   };
   services.gnome.gnome-keyring.enable = true; #store authlogin
 
@@ -125,7 +125,12 @@
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.fish;
     packages = with pkgs; [
-    #  thunderbird
+    (vscode-with-extensions.override {
+    vscodeExtensions = with vscode-extensions; [
+      ms-python.python
+      jnoortheen.nix-ide
+    ];
+    })
     ];
   };
 
