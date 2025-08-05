@@ -1,10 +1,10 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Bootloader
   boot.loader.systemd-boot.enable = true;
@@ -50,7 +50,19 @@
   console.keyMap = "it2";
 
   # Enable CUPS to print documents.
-  services.printing.enable = true;
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
+
+  services.printing = {
+    enable = true;
+    drivers = with pkgs; [
+      cups-filters
+      cups-browsed
+    ];
+  };
 
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
@@ -63,14 +75,17 @@
   };
 
   # Allow flakes
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
-  git
+    git
   ];
 
   # enable programs and config their settings
@@ -97,109 +112,126 @@
   programs.vscode = {
     enable = true;
     defaultEditor = true;
-    
+
   };
-  services.gnome.gnome-keyring.enable = true; #store authlogin
+  services.gnome.gnome-keyring.enable = true; # store authlogin
 
-
-  
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.alby = {
     isNormalUser = true;
     description = "alberto";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     shell = pkgs.fish;
     packages = with pkgs; [
-      vim
-  curl
-  wget
-  git
-  bash
-  fish
-  ghostty
-  jq
-  bat
-  ghostscript
-  fzf
-  yt-dlp
-  btop
-  testdisk
-  fastfetch
-  bitwarden-desktop
-  nixfmt-rfc-style
-  rustup
 
-  # set up vscode with its extensions
-  (vscode-with-extensions.override {
-    vscodeExtensions = with vscode-extensions; [
-      # already packaged in nix packages
-      # languages
-      jnoortheen.nix-ide
-      ms-python.python
-      ms-python.debugpy
-      ms-python.vscode-pylance
-      rust-lang.rust-analyzer
-      golang.go
-      reditorsupport.r
-      #utils
-      esbenp.prettier-vscode
-      codezombiech.gitignore
-      tyriar.sort-lines
-      tomoki1207.pdf
-      
-      # not packaged, manual retrival
-    ]++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-      {
-        name = "vscode-python-envs";
-        publisher = "ms-python";
-        version = "1.2.0";
-        sha256 = "6QjfJuxqu7sXqlcp3q3T+J9aGsOSu90xoQxdL+G6Fus=";
-      }
-      {
-        name = "r-syntax";
-        publisher = "reditorsupport";
-        version = "0.1.3";
-        sha256 = "grkfkmyERVUkB8kSH+NPd2Mv4WF/h/obw8ebmxPx5zU=";
-      }
-      {
-        name = "string-manipulation";
-        publisher = "marclipovsky";
-        version = "0.7.43";
-        sha256 = "i9DhQZ1sZiMQnEK9kUBbAeq1+CqAyZPk0jb48tGv7yg=";
-      }
-      {
-        name = "ruff";
-        publisher = "charliermarsh";
-        version = "2025.24.0";
-        sha256 = "ijy/ZVhVU1/ZrS1Fu3vuiThcjLuKSqf3lrgl8is54Co=";
-      }
-      {
-        name = "vscode-edit-csv";
-        publisher = "janisdd";
-        version = "0.11.5";
-        sha256 = "0DPp4F+cdLff80XGXYoDiXtoAKKs/wp44qv41qG36dU=";
-      }
-    ];
-    })
+      #command line tools
+      R
+      go
+      jq
+      bat
+      fzf
+      git
+      vim
+      bash
+      btop
+      curl
+      fish
+      wget
+      ffmpeg
+      rustup
+      yt-dlp
+      testdisk
+      fastfetch
+      ghostscript
+      nixfmt-rfc-style
+      # applicationws
+      vlc
+      gimp3
+      ghostty
+      bleachbit
+      thunderbird
+      mkvtoolnix
+      obs-studio
+      bitwarden-desktop
+
+      # set up vscode with its extensions
+      (vscode-with-extensions.override {
+        vscodeExtensions =
+          with vscode-extensions;
+          [
+            # already packaged in nix packages
+            # languages
+            jnoortheen.nix-ide
+            ms-python.python
+            ms-python.debugpy
+            ms-python.vscode-pylance
+            rust-lang.rust-analyzer
+            golang.go
+            reditorsupport.r
+            #utils
+            esbenp.prettier-vscode
+            codezombiech.gitignore
+            tyriar.sort-lines
+            tomoki1207.pdf
+
+            # not packaged, manual retrival
+            # TO DO packaging
+          ]
+          ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+            {
+              name = "vscode-python-envs";
+              publisher = "ms-python";
+              version = "1.2.0";
+              sha256 = "6QjfJuxqu7sXqlcp3q3T+J9aGsOSu90xoQxdL+G6Fus=";
+            }
+            {
+              name = "r-syntax";
+              publisher = "reditorsupport";
+              version = "0.1.3";
+              sha256 = "grkfkmyERVUkB8kSH+NPd2Mv4WF/h/obw8ebmxPx5zU=";
+            }
+            {
+              name = "string-manipulation";
+              publisher = "marclipovsky";
+              version = "0.7.43";
+              sha256 = "i9DhQZ1sZiMQnEK9kUBbAeq1+CqAyZPk0jb48tGv7yg=";
+            }
+            {
+              name = "ruff";
+              publisher = "charliermarsh";
+              version = "2025.24.0";
+              sha256 = "ijy/ZVhVU1/ZrS1Fu3vuiThcjLuKSqf3lrgl8is54Co=";
+            }
+            {
+              name = "vscode-edit-csv";
+              publisher = "janisdd";
+              version = "0.11.5";
+              sha256 = "0DPp4F+cdLff80XGXYoDiXtoAKKs/wp44qv41qG36dU=";
+            }
+          ];
+      })
     ];
   };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
-   programs.gnupg.agent = {
-     enable = true;
-     enableSSHSupport = true;
-   };
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
 
   # List services that you want to enable:
   # tesy commit
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-  
+
   # Open ports in the firewall.
-   networking.firewall.allowedTCPPorts = [ 22 ];
+  networking.firewall.allowedTCPPorts = [ 22 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   networking.firewall.enable = true;
