@@ -70,22 +70,7 @@
 
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
-  home-manager
-  vim
-  curl
-  wget
   git
-  bash
-  fish
-  ghostty
-  jq
-  bat
-  ghostscript
-  fzf
-  yt-dlp
-  btop
-  testdisk
-  fastfetch
   ];
 
   # enable programs and config their settings
@@ -125,10 +110,51 @@
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.fish;
     packages = with pkgs; [
+      vim
+  curl
+  wget
+  git
+  bash
+  fish
+  ghostty
+  jq
+  bat
+  ghostscript
+  fzf
+  yt-dlp
+  btop
+  testdisk
+  fastfetch
+  bitwarden-desktop
+  nixfmt-rfc-style
     (vscode-with-extensions.override {
     vscodeExtensions = with vscode-extensions; [
-      ms-python.python
+      # languages
       jnoortheen.nix-ide
+      ms-python.python
+      ms-python.debugpy
+      ms-python.vscode-python-envs
+      ms-python.vscode-pylance
+      rust-lang.rust-analyzer
+      golang.go
+      reditorsupport.r
+
+reditorsupport.r-syntax
+      #utils
+
+      esbenp.prettier-vscode
+      codezombiech.gitignore
+tyriar.sort-lines
+marclipovsky.string-manipulation
+
+
+tomoki1207.pdf
+charliermarsh.ruff
+
+
+
+janisdd.vscode-edit-csv
+
     ];
     })
     ];
