@@ -209,6 +209,7 @@
       curl
       fish
       wget
+      htop
       ffmpeg-full
       rustup
       yt-dlp
