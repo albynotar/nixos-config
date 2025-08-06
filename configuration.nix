@@ -72,34 +72,18 @@
 
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
-  # services.xserver.enable = true;
-  # services.xserver = {
-  #   desktopManager = {
-  #     xterm.enable = false;
-  #     xfce.enable = true;
-  #   };
-  # };
-  # services.displayManager.defaultSession = "xfce";
-  # services.xserver.xkb = {
-  #   layout = "it";
-  #   variant = "";
-  # };
-
-  # Enable KDE Plasma with Wayland
-  services.xserver.enable = false;
-  services.xserver.desktopManager.plasma5.enable = true;
-  services.xserver.desktopManager.plasma5.sessionType = "plasma-wayland";
-  services.xserver.windowManager.plasma5.enable = true;
-
-  # Enable SDDM as the display manager
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.displayManager.sddm.sessionCommands = ''exec startplasma-wayland'';
-
-  # Enable XWayland for running X11 applications
-  services.xwayland.enable = true;
-
-  # Enable Wayland support
-  wayland.enable = true;
+  services.xserver.enable = true;
+  services.xserver = {
+    desktopManager = {
+      xterm.enable = false;
+      xfce.enable = true;
+    };
+  };
+  services.displayManager.defaultSession = "xfce";
+  services.xserver.xkb = {
+    layout = "it";
+    variant = "";
+  };
 
   # Configure console keymap
   console.keyMap = "it2";
@@ -244,13 +228,6 @@
       obs-studio
       libreoffice
       bitwarden-desktop
-
-      # wayland support
-      kdePlasma5
-      kdeApplications
-      plasma5-wayland-protocols
-      plasma5-wayland-session
-      xwayland
 
       # set up vscode with its extensions
       (vscode-with-extensions.override {
