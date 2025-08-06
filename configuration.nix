@@ -226,6 +226,7 @@
       thunderbird
       mkvtoolnix
       obs-studio
+      libreoffice
       bitwarden-desktop
 
       # set up vscode with its extensions
