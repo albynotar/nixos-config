@@ -16,7 +16,7 @@
   };
 
   # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.nvidia = {
 
@@ -25,7 +25,7 @@
 
     # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
     # Enable this if you have graphical corruption issues or application crashes after waking
-    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead 
+    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
     # of just the bare essentials.
     powerManagement.enable = false;
 
@@ -35,14 +35,14 @@
 
     # Use the NVidia open source kernel module (not to be confused with the
     # independent third-party "nouveau" open source driver).
-    # Support is limited to the Turing and later architectures. Full list of 
-    # supported GPUs is at: 
-    # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
+    # Support is limited to the Turing and later architectures. Full list of
+    # supported GPUs is at:
+    # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus
     # Only available from driver 515.43.04+
     open = true;
 
     # Enable the Nvidia settings menu,
-	# accessible via `nvidia-settings`.
+    # accessible via `nvidia-settings`.
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
@@ -72,18 +72,34 @@
 
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
-  services.xserver.enable = true;
-  services.xserver = {
-    desktopManager = {
-      xterm.enable = false;
-      xfce.enable = true;
-    };
-  };
-  services.displayManager.defaultSession = "xfce";
-  services.xserver.xkb = {
-    layout = "it";
-    variant = "";
-  };
+  # services.xserver.enable = true;
+  # services.xserver = {
+  #   desktopManager = {
+  #     xterm.enable = false;
+  #     xfce.enable = true;
+  #   };
+  # };
+  # services.displayManager.defaultSession = "xfce";
+  # services.xserver.xkb = {
+  #   layout = "it";
+  #   variant = "";
+  # };
+
+  # Enable KDE Plasma with Wayland
+  services.xserver.enable = false;
+  services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver.desktopManager.plasma5.sessionType = "plasma-wayland";
+  services.xserver.windowManager.plasma5.enable = true;
+
+  # Enable SDDM as the display manager
+  services.xserver.displayManager.sddm.enable = true;
+  services.xserver.displayManager.sddm.sessionCommands = ''exec startplasma-wayland'';
+
+  # Enable XWayland for running X11 applications
+  services.xwayland.enable = true;
+
+  # Enable Wayland support
+  wayland.enable = true;
 
   # Configure console keymap
   console.keyMap = "it2";
@@ -149,7 +165,7 @@
         "privacy.resistFingerprinting" = false;
         "privacy.trackingprotection.emailtracking.enabled" = true;
         "privacy.trackingprotection.enabled" = true;
-        "privacy.trackingprotection.fingerprinting.enabled" =false;
+        "privacy.trackingprotection.fingerprinting.enabled" = false;
         "privacy.trackingprotection.socialtracking.enabled" = true;
         "sidebar.verticalTabs.enabled" = true;
         "sidebar.verticalTabs" = true;
@@ -164,7 +180,7 @@
           install_url = "https://addons.mozilla.org/it/firefox/addon/youtube-recommended-videos/latest.xpi";
           installation_mode = "force_installed";
         };
-        
+
       };
     };
   };
@@ -228,6 +244,13 @@
       obs-studio
       libreoffice
       bitwarden-desktop
+
+      # wayland support
+      kdePlasma5
+      kdeApplications
+      plasma5-wayland-protocols
+      plasma5-wayland-session
+      xwayland
 
       # set up vscode with its extensions
       (vscode-with-extensions.override {
